@@ -9,7 +9,7 @@ export default function NotFound() {
         <h1 className="text-4xl md:text-6xl font-bold tracking-tighter">
           404<span className="text-rose-500">.wtf</span>
         </h1>
-        <p className="text-zinc-400 text-lg">This shortened URL doesn't exist or has expired.</p>
+        <p className="text-zinc-400 text-lg">This shortened URL doesn&apos;t exist or has expired.</p>
         <Button asChild className="bg-rose-500 hover:bg-rose-600">
           <Link href="/">Go back home</Link>
         </Button>

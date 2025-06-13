@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 
 import prisma from "./db";
-
+import getErrorMessage from "./getErrorMessage";
 import { generateShortCode } from "./url";
 
 export async function shortenUrl(url: string): Promise<string> {
@@ -13,8 +13,8 @@ export async function shortenUrl(url: string): Promise<string> {
     if (!urlObj.protocol.startsWith("http")) {
       throw new Error("URL must start with http:// or https://");
     }
-  } catch (error) {
-    throw new Error("Please enter a valid URL");
+  } catch (error: unknown) {
+    throw new Error(getErrorMessage(error, "Please enter a valid URL"));
   }
 
   // Generate a unique short code
@@ -49,8 +49,6 @@ export async function getUrlByShortCode(shortCode: string): Promise<string | nul
   const url = await prisma.shortenedUrl.findUnique({
     where: { shortCode },
   });
-
-  console.log("shortCode", shortCode, url);
 
   if (!url) {
     return null;

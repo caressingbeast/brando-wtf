@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { shortenUrl } from "@/lib/actions";
+import getErrorMessage from "@/lib/getErrorMessage";
 
 export function ShortenUrlForm() {
   const [url, setUrl] = useState<string>("");
@@ -30,8 +31,8 @@ export function ShortenUrlForm() {
         const result = await shortenUrl(url);
         setShortUrl(result);
         toast("URL shortened successfully!");
-      } catch (error) {
-        // error
+      } catch (error: unknown) {
+        toast(getErrorMessage(error, "URL could not be created."));
       }
     });
   }
@@ -44,8 +45,8 @@ export function ShortenUrlForm() {
       setCopied(true);
       toast("Copied to clipboard!");
       setTimeout(() => setCopied(false), 2000)
-    } catch (error) {
-      toast("Failed to copy URL.");
+    } catch (error: unknown) {
+      toast(getErrorMessage(error, "Failed to copy URL."));
     }
   }
 
